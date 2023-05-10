@@ -6,25 +6,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
   </head>
   
-<body>
-  <script id="template" type="text/x-handlebars-template">
-    <h1>Team Profile</h1>
-    {{#each teamMembers}}
-      <div>
-        <h2>{{this.getName()}}</h2>
-        <p>ID: {{this.getId()}}</p>
-        <p>Email: {{this.getEmail()}}</p>
-        {{#if (this.getRole "Manager") }}
-          <p>Office Number: {{this.officeNumber}}</p>
-        {{/if}}
-        {{#if (this.getRole "Engineer") }}
-          <p>GitHub: {{this.getGithub()}}</p>
-        {{/if}}
-        {{#if (this.getRole "Intern") }}
-          <p>School: {{this.getSchool()}}</p>
-        {{/if}}
-      </div>
-    {{/each}}
-  </script>
+  <body>
+    Handlebars.registerHelper('ifEqual', function(a, b, options) {
+      if (a === b) {
+        return options.fn(this);
+      } else {
+        return options.inverse(this);
+      }
+    });
+    
+    <script id="template" type="text/x-handlebars-template">
+      <h1>Team Profile</h1>
+      {{#each teamMembers}}
+        <div>
+          {{#with this}}
+            <h2>{{getName}}</h2> 
+            <p>ID:{{getId}}</p>
+            <p>Email:{{getEmail}}</p>
+            {{#ifEqual (eq getRole "Manager") }}
+              <p>Office Number:{{officeNumber}}</p>
+            {{/ifEqual}}
+            {{#ifEqual (eq getRole "Engineer") }}
+              <p>GitHub:{{getGithub}}</p>
+            {{/ifEqual}}
+            {{#ifEqual (eq getRole "Intern") }}
+              <p>School:{{getSchool}}</p>
+            {{/ifEqual}}
+          {{/with}}
+        </div>
+      {{/each}}
+    </script>
+  </body>
   
 </html>
+

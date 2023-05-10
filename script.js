@@ -2,6 +2,10 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const Handlebars = require('handlebars');
 
+Handlebars.registerHelper('getName', function() {
+  // compute the name property here
+  return name;
+});
 
 
 class Employee {
